@@ -183,7 +183,6 @@ class SoCo(_SocoSingletonBase):
         # Note: Creation of a SoCo instance should be as cheap and quick as
         # possible. Do not make any network calls here
         super(SoCo, self).__init__()
-        self._setup_tools()
         # Check if ip_address is a valid IPv4 representation.
         # Sonos does not (yet) support IPv6
         try:
